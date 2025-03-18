@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:NextDrama.ViewModels"
+
+             x:Class="NextDrama.MainPage">
+
+    <ContentPage.BindingContext>
+    <local:MainViewModel/>
+    </ContentPage.BindingContext>
+
+
+    <ScrollView>
+        <VerticalStackLayout>
+
+            <HorizontalStackLayout HorizontalOptions="Start" Spacing="20" Margin="0,50,0,0">
+                <ImageButton Source="ndm.png"
+                 HeightRequest="40"
+                 WidthRequest="40"
+                 BackgroundColor="Transparent"
+                 Clicked="OnMenuButtonClicked"
+                 Margin="300,0,50,0"/>
+
+                <Image Source="ndd.png" HeightRequest="170" Aspect="AspectFit"
+           Margin="50,0,50,0"/>
+
+                <Image Source="ndnot.png" HeightRequest="30" Aspect="AspectFit"
+           Margin="0,0,0,0"/>
+            </HorizontalStackLayout>
+
+            <Label Text="Discover, rate, and create your own list of top Asian dramas and movies."
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   FontSize="17"
+                   TextColor="DimGrey" 
+                   Margin="0,20,0,50"/>
+
+            <Image x:Name="HeaderImage"
+                   Source="sk.png"
+                   HeightRequest="170"
+                   Aspect="AspectFit"
+                   Margin="0,0,0,90"/>
+
+            <!-- 🔹 KNAPPAR UNDER HEADERN SOM ÄR KLICKBARA -->
+            <Grid BackgroundColor="#F1F0F0" HeightRequest="80" Padding="0" Margin="0,-10,0,0">
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="90" VerticalOptions="Center">
+                    <Button Text="FOR YOU"
+                WidthRequest="100"
+                HeightRequest="35"
+                CornerRadius="0"
+                BackgroundColor="#F1F0F0"
+                TextColor="#695060"
+                Command="{Binding CategorySelectedCommand}"
+                CommandParameter="FOR YOU"/>
+
+                    <Button Text="SHOWS"
+                WidthRequest="100"
+                HeightRequest="35"
+                CornerRadius="0"
+                BackgroundColor="#F1F0F0"
+                TextColor="DimGrey"
+                Command="{Binding CategorySelectedCommand}"
+                CommandParameter="SHOWS"/>
+
+                    <Button Text="MOVIES"
+                WidthRequest="100"
+                HeightRequest="35"
+                CornerRadius="0"
+                BackgroundColor="#F1F0F0"
+                TextColor="DimGrey"
+                Command="{Binding CategorySelectedCommand}"
+                CommandParameter="MOVIES"/>
+
+                    <Button Text="NEWS"
+                WidthRequest="100"
+                HeightRequest="35"
+                CornerRadius="0"
+                BackgroundColor="#F1F0F0"
+                TextColor="DimGrey"
+                Command="{Binding CategorySelectedCommand}"
+                CommandParameter="NEWS"/>
+                </HorizontalStackLayout>
+            </Grid>
+
+
+            <!-- Sökruta + sökikon tillbaka! -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="70,80,20,20">
+                <Entry Placeholder="Search for movies or series..."
+           WidthRequest="890"  
+           HeightRequest="10"
+           BackgroundColor="#EEEBED"
+           TextColor="DimGray"
+           HorizontalOptions="Center"/>
+
+                <ImageButton Source="ndnff.png"
+                 WidthRequest="70"  
+                 HeightRequest="40"
+                 BackgroundColor="Transparent"
+                 Command="{Binding YourCommand}"
+                 HorizontalOptions="Center"/>
+            </HorizontalStackLayout>
+
+
+
+
+
+
+
+
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand" Spacing="327" Margin="310,150,20,10">
+                <Label Text="RECOMMENDED FOR YOU"
+                       HorizontalOptions="Start"  
+                       VerticalOptions="Center"
+                       FontSize="16"
+                       TextColor="DimGrey" />
+
+                <Label HorizontalOptions="FillAndExpand" />
+
+                <Button Text="VIEW ALL"
+                        WidthRequest="110" 
+                        HeightRequest="10"
+                        CornerRadius="0"
+                        BackgroundColor="#695060"
+                        TextColor="White"
+                        HorizontalOptions="End"
+                        FontSize="13" />
+            </HorizontalStackLayout>
+
+
+            <CollectionView ItemsSource="{Binding RecommendedDramas}" SelectionMode="None"
+    Margin="280,20,20,20"
+    HorizontalOptions="FillAndExpand"
+    HeightRequest="250">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="20"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="0" CornerRadius="0" BackgroundColor="Transparent"
+                   WidthRequest="130" HeightRequest="200"
+                   HasShadow="False" BorderColor="Transparent">
+                            <Image Source="{Binding ImageUrl}" WidthRequest="130" HeightRequest="200"
+                       Aspect="AspectFit">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:MainViewModel}}, Path=ImageTappedCommand}"
+                                              CommandParameter="{Binding}" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+
+
+
+
+
+
+
+            <Image Source="prick.png"
+                   WidthRequest="150"  
+                   HeightRequest="30"
+                   HorizontalOptions="Center"
+                   Margin="0,-20,0,0"/>
+
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand" Spacing="364" Margin="310,120,20,10">
+                <Label Text="COMING IN 2025"
+                       HorizontalOptions="Start"  
+                       VerticalOptions="Center"
+                       FontSize="16"
+                       TextColor="DimGrey" />
+
+                <Label HorizontalOptions="FillAndExpand" />
+
+                <Button Text="VIEW ALL"
+                        WidthRequest="110" 
+                        HeightRequest="10"
+                        CornerRadius="0"
+                        BackgroundColor="#695060"
+                        TextColor="White"
+                        HorizontalOptions="End"
+                        FontSize="13" />
+            </HorizontalStackLayout>
+
+
+            <CollectionView ItemsSource="{Binding ComingIn2025}" SelectionMode="None"
+    Margin="280,20,20,20"
+    HorizontalOptions="FillAndExpand"
+    HeightRequest="250">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="20"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="0" CornerRadius="0" BackgroundColor="Transparent"
+                   WidthRequest="130" HeightRequest="200"
+                   HasShadow="False" BorderColor="Transparent">
+                            <Image Source="{Binding ImageUrl}" WidthRequest="130" HeightRequest="200"
+                       Aspect="AspectFit">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:MainViewModel}}, Path=ImageTappedCommand}"
+                                              CommandParameter="{Binding}" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+            <Image Source="prick.png"
+                   WidthRequest="150"  
+                   HeightRequest="30"
+                   HorizontalOptions="Center"
+                   Margin="0,-20,0,0"/>
+
+            <HorizontalStackLayout HorizontalOptions="FillAndExpand" Spacing="347" Margin="310,120,20,10">
+                <Label Text="TOP VARIETY SHOWS"
+                       HorizontalOptions="Start"  
+                       VerticalOptions="Center"
+                       FontSize="16"
+                       TextColor="DimGrey" />
+
+                <Label HorizontalOptions="FillAndExpand" />
+
+                <Button Text="VIEW ALL"
+                        WidthRequest="110" 
+                        HeightRequest="10"
+                        CornerRadius="0"
+                        BackgroundColor="#695060"
+                        TextColor="White"
+                        HorizontalOptions="End"
+                        FontSize="13" />
+            </HorizontalStackLayout>
+
+
+            <CollectionView ItemsSource="{Binding TopVarietyShows}" SelectionMode="None"
+    Margin="280,20,20,20"
+    HorizontalOptions="FillAndExpand"
+    HeightRequest="250">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="20"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="0" CornerRadius="0" BackgroundColor="Transparent"
+                   WidthRequest="130" HeightRequest="200"
+                   HasShadow="False" BorderColor="Transparent">
+                            <Image Source="{Binding ImageUrl}" WidthRequest="130" HeightRequest="200"
+                       Aspect="AspectFit">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:MainViewModel}}, Path=ImageTappedCommand}"
+                                              CommandParameter="{Binding}" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+
+            <Image Source="prick.png"
+                   WidthRequest="150"  
+                   HeightRequest="30"
+                   HorizontalOptions="Center"
+                   Margin="0,-20,0,0"/>
+
+            <Grid BackgroundColor="#F1F0F0"
+                  HeightRequest="120"
+                  Padding="0"
+                  Margin="0,100,0,0">
+
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="200" Margin="20,20,0,0">
+                    <ImageButton Source="ex.png" WidthRequest="63" HeightRequest="60"
+                                 BackgroundColor="Transparent"
+                                 Command="{Binding ImageTappedCommand}"
+                                 CommandParameter="ex"
+                                 Margin="10,0,10,0"/>
+
+                    <ImageButton Source="ml.png" WidthRequest="60" HeightRequest="60"
+                                 BackgroundColor="Transparent"
+                                 Command="{Binding ImageTappedCommand}"
+                                 CommandParameter="ml"
+                                 Margin="10,0,10,0"/>
+
+                    <ImageButton Source="fe.png" WidthRequest="50" HeightRequest="60"
+                                 BackgroundColor="Transparent"
+                                 Command="{Binding ImageTappedCommand}"
+                                 CommandParameter="fe"
+                                 Margin="10,0,10,0"/>
+
+                    <ImageButton Source="pr.png" WidthRequest="55" HeightRequest="60"
+                                 BackgroundColor="Transparent"
+                                 Command="{Binding ImageTappedCommand}"
+                                 CommandParameter="pr"
+                                 Margin="10,0,10,0"/>
+                </HorizontalStackLayout>
+
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
+
+

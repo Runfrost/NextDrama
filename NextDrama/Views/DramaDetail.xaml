@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NextDrama.Views.DramaDetail">
+
+    <ScrollView>
+        <AbsoluteLayout>
+
+            <!-- Dropdown Explore (ÖVER bilden) -->
+            <StackLayout x:Name="ExploreDropdownLayout" IsVisible="False"
+                         BackgroundColor="White"
+                         Padding="10"
+                         WidthRequest="150"
+                         AbsoluteLayout.LayoutFlags="PositionProportional"
+                         AbsoluteLayout.LayoutBounds="0.33, 0.10, 150, 100"
+                         ZIndex="10">
+                <Label Text="Popular" TextColor="Black" Margin="5"/>
+                <Label Text="New Releases" TextColor="Black" Margin="5"/>
+                <Label Text="Top Rated" TextColor="Black" Margin="5"/>
+            </StackLayout>
+
+            <!-- Dropdown Community (ÖVER bilden) -->
+            <StackLayout x:Name="CommunityDropdownLayout" IsVisible="False"
+                         BackgroundColor="White"
+                         Padding="10"
+                         WidthRequest="150"
+                         AbsoluteLayout.LayoutFlags="PositionProportional"
+                         AbsoluteLayout.LayoutBounds="0.45, 0.10, 150, 100"
+                         ZIndex="10">
+                <Label Text="Forums" TextColor="Black" Margin="5"/>
+                <Label Text="Groups" TextColor="Black" Margin="5"/>
+                <Label Text="Events" TextColor="Black" Margin="5"/>
+            </StackLayout>
+
+            <!-- Grid för navigeringsmenyn -->
+            <Grid BackgroundColor="#695060" HeightRequest="60"
+                  AbsoluteLayout.LayoutBounds="0,0,1,60"
+                  AbsoluteLayout.LayoutFlags="WidthProportional">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- NextDrama Titel -->
+                <Label Grid.Column="0"
+                       Text="NextDrama"
+                       FontSize="40"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       VerticalOptions="Center"
+                       Margin="20,0,0,0"
+                       FontFamily="OpenSansSemibold">
+                    <Label.Shadow>
+                        <Shadow Brush="Black" Offset="3,3" Opacity="0.6"/>
+                    </Label.Shadow>
+                </Label>
+
+                <!-- Home -->
+                <Label Grid.Column="1"
+                       Text="Home"
+                       FontSize="15"
+                       TextColor="White"
+                       VerticalOptions="Center"
+                       Margin="150,0,40,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnHomeTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <!-- Explore (Dropdown + Pil bredvid) -->
+                <StackLayout Grid.Column="2" Orientation="Horizontal" VerticalOptions="Center" Margin="40,0,40,0">
+                    <Label Text="Explore"
+                           FontSize="15"
+                           TextColor="White"
+                           VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnExploreTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="▼"
+                           FontSize="15"
+                           TextColor="White"
+                           VerticalOptions="Center"
+                           Margin="5,0,0,0"/>
+                </StackLayout>
+
+                <!-- Community (Dropdown + Pil bredvid) -->
+                <StackLayout Grid.Column="3" Orientation="Horizontal" VerticalOptions="Center" Margin="40,0,40,0">
+                    <Label Text="Community"
+                           FontSize="15"
+                           TextColor="White"
+                           VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCommunityTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="▼"
+                           FontSize="15"
+                           TextColor="White"
+                           VerticalOptions="Center"
+                           Margin="5,0,0,0"/>
+                </StackLayout>
+
+                <!-- Calendar -->
+                <Label Grid.Column="4"
+                       Text="Calendar"
+                       FontSize="15"
+                       TextColor="White"
+                       VerticalOptions="Center"
+                       Margin="40,0,20,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCalendarTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <!-- Sökruta bredvid "Calendar" -->
+                <Entry Grid.Column="5"
+                       Placeholder="Search..."
+                       BackgroundColor="#8D7585"
+                       TextColor="Black"
+                       HeightRequest="30"
+                       VerticalOptions="Center"
+                       Margin="120,0,20,0"/>
+            </Grid>
+
+            <!-- Bild under navigeringsmenyn -->
+            <Image x:Name="HeaderImage"
+       Source="c2.png"
+       Aspect="AspectFill"
+       AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+       AbsoluteLayout.LayoutFlags="WidthProportional, HeightProportional"
+       Margin="0,-50,0,0"/>
+
+
+
+            <!-- 🔹 Knapp UNDER bilden -->
+            <Button Text="Lägg till i min lista"
+                    BackgroundColor="#8D7585"
+                    TextColor="White"
+                    FontSize="Body"
+                    CornerRadius="20"
+                    WidthRequest="145"
+                    HeightRequest="40"
+                    AbsoluteLayout.LayoutBounds="0.6, 0.36, 200, 50"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    Clicked="OnPopupButtonClicked"/>
+
+            <!-- 🔹 Popup-fönster med tre knappar -->
+            <Frame x:Name="PopupMenu"
+                   IsVisible="False"
+                   BackgroundColor="White"
+                   CornerRadius="10"
+                   Padding="0"
+                   WidthRequest="150"
+                   AbsoluteLayout.LayoutBounds="0.6, 1.1, 220, 450"
+                   AbsoluteLayout.LayoutFlags="PositionProportional">
+
+                <StackLayout Spacing="10">
+                    <Button Text="Ser på just nu" BackgroundColor="#695060" TextColor="White"/>
+                    <Button Text="Vill se senare" BackgroundColor="#695060" TextColor="White"/>
+                    <Button Text="Har sett" BackgroundColor="#695060" TextColor="White"/>
+                    <Button Text="Avbryt" BackgroundColor="#8D7585" TextColor="White" Clicked="OnPopupButtonClicked"/>
+                </StackLayout>
+
+            </Frame>
+
+
+
+        </AbsoluteLayout>
+    </ScrollView>
+
+</ContentPage>
+
