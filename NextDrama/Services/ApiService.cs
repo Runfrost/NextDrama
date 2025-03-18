@@ -6,34 +6,31 @@ namespace NextDrama.Services
 {
     public class ApiService
     {
-        // Din API-nyckel (lägg till den här)
-        private static readonly string apiKey = "adf5e21c98bbdec41ee0a487cc7ea399"; // Ersätt med din verkliga API-nyckel
-        private static readonly string baseUrl = "https://api.themoviedb.org/3/discover/tv?"; // Bas-URL för att bygga URL:en
-        private static readonly HttpClient client = new HttpClient();
+        private static readonly Lazy<ApiService> _instance = new(() => new ApiService());
+        public static ApiService Instance => _instance.Value;
 
-        // Metod som tar emot URL som parameter och returnerar API-svaret
-        public async Task<string> GetRawApiResponse(string url)
+        private static readonly HttpClient client = new HttpClient();
+        private const string ApiKey = "adf5e21c98bbdec41ee0a487cc7ea399";
+        private const string BaseUrl = "https://api.themoviedb.org/3/discover/tv?";
+
+        private ApiService() { } // Privat konstruktor för Singleton
+
+        public async Task<string> GetRawApiResponseAsync(string parameters)
         {
             try
             {
-                // Bygg hela URL:en med din API-nyckel
-                string fullUrl = $"{baseUrl}api_key={apiKey}{url}";
-
-                // Skicka GET-anrop till den kompletta URL:en
+                string fullUrl = $"{BaseUrl}api_key={ApiKey}{parameters}";
                 HttpResponseMessage response = await client.GetAsync(fullUrl);
 
-                // Kolla om anropet lyckades
                 if (!response.IsSuccessStatusCode)
                     throw new Exception($"API Error: {response.StatusCode}");
 
-                // Läs innehållet i svaret och returnera det som en sträng
-                string json = await response.Content.ReadAsStringAsync();
-                return json; // Returnerar rå JSON som vi kan testa
+                return await response.Content.ReadAsStringAsync();
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error fetching TV shows: {ex.Message}");
-                return null; // Om något går fel, returnera null
+                Console.WriteLine($"❌ API Error: {ex.Message}");
+                return null;
             }
         }
     }
