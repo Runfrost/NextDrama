@@ -117,7 +117,7 @@
                        VerticalOptions="Center"
                        Margin="40,0,20,0">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnCalendarTapped"/>
+                        
                     </Label.GestureRecognizers>
                 </Label>
 
