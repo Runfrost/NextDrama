@@ -79,7 +79,7 @@
                     </Label.GestureRecognizers>
                 </Label>
 
-                <!-- Explore (Dropdown + Pil bredvid) -->
+                <!-- Explore -->
                 <StackLayout Grid.Column="2" Orientation="Horizontal" VerticalOptions="Center" Margin="40,0,40,0">
                     <Label Text="Explore"
                            FontSize="15"
@@ -87,6 +87,23 @@
                            VerticalOptions="Center">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnExploreTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="▼"
+                           FontSize="15"
+                           TextColor="White"
+                           VerticalOptions="Center"
+                           Margin="5,0,0,0"/>
+                </StackLayout>
+
+                <!-- Community (Dropdown + Pil bredvid) -->
+                <StackLayout Grid.Column="3" Orientation="Horizontal" VerticalOptions="Center" Margin="40,0,40,0">
+                    <Label Text="Community"
+                           FontSize="15"
+                           TextColor="White"
+                           VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCommunityTapped"/>
                         </Label.GestureRecognizers>
                     </Label>
                     <Label Text="▼"
@@ -104,6 +121,7 @@
                        VerticalOptions="Center"
                        Margin="40,0,20,0">
                     <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCalendarTapped"/>
                     </Label.GestureRecognizers>
                 </Label>
 
@@ -117,16 +135,13 @@
                        VerticalOptions="Center"
                        Margin="120,0,20,0"
                        Completed="OnSearchCompleted"/>
-                <!-- 🔹 Triggar metod i C#-filen -->
-
             </Grid>
 
             <!-- Bild under navigeringsmenyn -->
             <Image Source="sk.png"
                    Aspect="AspectFill"
                    AbsoluteLayout.LayoutBounds="0.5, 0.11,0.9, 200"
-                   AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-                   Margin="0,0,0,0"/>
+                   AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"/>
 
             <!-- CollectionView för att visa serier -->
             <CollectionView x:Name="ShowsCollectionView"
@@ -180,14 +195,15 @@
                                        HorizontalOptions="Center" 
                                        TextColor="Black" />
 
-                                <!-- Knapp för att lägga till serien i Min Lista -->
+                                <!-- Knapp med animation -->
                                 <Button Text="➕ Lägg till i min lista"
                                         BackgroundColor="#8D7585"
                                         TextColor="White"
-                                        CornerRadius="0"
+                                        CornerRadius="20"
                                         Padding="5"
                                         Command="{Binding AddToUserListCommand}"
-                                        CommandParameter="{Binding}"/>
+                                        CommandParameter="{Binding}"
+                                        Clicked="AnimateButton"/>
                             </StackLayout>
                         </Frame>
                     </DataTemplate>
