@@ -33,6 +33,16 @@ namespace NextDrama.Views
             CommunityDropdownLayout.IsVisible = !CommunityDropdownLayout.IsVisible;
             ExploreDropdownLayout.IsVisible = false;
         }
+
+        private void OnSearchCompleted(object sender, EventArgs e)
+        {
+            var viewModel = BindingContext as ShowsViewModel;
+            if (viewModel?.SearchCommand.CanExecute(null) == true)
+            {
+                viewModel.SearchCommand.Execute(null);
+            }
+        }
+
     }
 }
 
