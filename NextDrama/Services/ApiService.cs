@@ -1,6 +1,9 @@
 ﻿using System;
+using NextDrama.Models;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Maui.Storage; // 🔹 För lokal lagring
 
 namespace NextDrama.Services
 {
@@ -53,7 +56,10 @@ namespace NextDrama.Services
             }
         }
 
-    }
+
+
+
+}
 }
 
 
