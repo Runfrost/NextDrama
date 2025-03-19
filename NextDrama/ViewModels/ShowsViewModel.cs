@@ -5,19 +5,37 @@ using System.Windows.Input;
 using NextDrama.Models;
 using NextDrama.Services;
 using Microsoft.Maui.Controls;
+using System.ComponentModel;
 
 namespace NextDrama.ViewModels
 {
-    public class ShowsViewModel
+    public class ShowsViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public ObservableCollection<TvShow> Shows { get; set; } = new();
-        public string SearchQuery { get; set; } // 🔹 Lagrar vad användaren skriver i sökrutan
+
+        private string _searchQuery;
+        public string SearchQuery
+        {
+            get => _searchQuery;
+            set
+            {
+                if (_searchQuery != value)
+                {
+                    _searchQuery = value;
+                    OnPropertyChanged(nameof(SearchQuery));
+                    _ = SearchTvShowsAsync(); // 🔹 Kör sökningen automatiskt när text ändras
+                }
+            }
+        }
+
         public ICommand SearchCommand { get; }
 
         public ShowsViewModel()
         {
             SearchCommand = new Command(async () => await SearchTvShowsAsync());
-            _ = FetchTvShowsAsync(); // 🔹 Hämta koreanska serier när sidan laddas
+            _ = FetchTvShowsAsync();
         }
 
         public async Task FetchTvShowsAsync()
@@ -53,7 +71,7 @@ namespace NextDrama.ViewModels
                 var searchResults = JsonSerializer.Deserialize<TvShowResponse>(jsonResponse);
                 if (searchResults?.Results != null)
                 {
-                    Shows.Clear(); // 🔹 Töm listan innan vi fyller på med sökresultaten
+                    Shows.Clear();
                     foreach (var show in searchResults.Results)
                     {
                         Shows.Add(show);
@@ -61,8 +79,14 @@ namespace NextDrama.ViewModels
                 }
             }
         }
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
+
 
 
 
