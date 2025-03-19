@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:NextDrama.ViewModels"
              x:Class="NextDrama.Views.ShowsPage">
 
+    <!-- Koppla ViewModel till denna sida -->
+    <ContentPage.BindingContext>
+        <local:ShowsViewModel/>
+    </ContentPage.BindingContext>
 
     <!-- Lägg till en ScrollView för att göra sidan skrollbar -->
     <ScrollView>
-
         <AbsoluteLayout>
 
             <!-- Dropdown Explore (ÖVER bilden) -->
@@ -92,23 +96,6 @@
                            Margin="5,0,0,0"/>
                 </StackLayout>
 
-                <!-- Community (Dropdown + Pil bredvid) -->
-                <StackLayout Grid.Column="3" Orientation="Horizontal" VerticalOptions="Center" Margin="40,0,40,0">
-                    <Label Text="Community"
-                           FontSize="15"
-                           TextColor="White"
-                           VerticalOptions="Center">
-                        <Label.GestureRecognizers>
-                           
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Text="▼"
-                           FontSize="15"
-                           TextColor="White"
-                           VerticalOptions="Center"
-                           Margin="5,0,0,0"/>
-                </StackLayout>
-
                 <!-- Calendar -->
                 <Label Grid.Column="4"
                        Text="Calendar"
@@ -117,22 +104,20 @@
                        VerticalOptions="Center"
                        Margin="40,0,20,0">
                     <Label.GestureRecognizers>
-                        
                     </Label.GestureRecognizers>
                 </Label>
 
                 <!-- Sökruta bredvid "Calendar" -->
                 <Entry Grid.Column="5"
-       Placeholder="Search..."
-       Text="{Binding SearchQuery}"
-       BackgroundColor="#8D7585"
-       TextColor="Black"
-       HeightRequest="30"
-       VerticalOptions="Center"
-       Margin="120,0,20,0"
-       Completed="OnSearchCompleted"/>
+                       Placeholder="Search..."
+                       Text="{Binding SearchQuery}"
+                       BackgroundColor="#8D7585"
+                       TextColor="Black"
+                       HeightRequest="30"
+                       VerticalOptions="Center"
+                       Margin="120,0,20,0"
+                       Completed="OnSearchCompleted"/>
                 <!-- 🔹 Triggar metod i C#-filen -->
-
 
             </Grid>
 
@@ -143,87 +128,72 @@
                    AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
                    Margin="0,0,0,0"/>
 
-
+            <!-- CollectionView för att visa serier -->
             <CollectionView x:Name="ShowsCollectionView"
-                AbsoluteLayout.LayoutBounds="0.5, 0.8, 0.9, 400"
-                AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-                ItemsSource="{Binding Shows}">
+                            AbsoluteLayout.LayoutBounds="0.5, 0.8, 0.9, 400"
+                            AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                            ItemsSource="{Binding Shows}">
 
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Span="4" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame Padding="10"
-                   BorderColor="White"
-                   BackgroundColor="#F3E9F0"
-                   CornerRadius="10"
-                   HasShadow="True"
-                   Margin="10">
+                               BorderColor="White"
+                               BackgroundColor="#F3E9F0"
+                               CornerRadius="10"
+                               HasShadow="False"
+                               Margin="10">
                             <StackLayout Padding="5" Spacing="5">
+
+                                <!-- Bild med enbart skugga -->
                                 <Image Source="{Binding FullPosterUrl}" 
-                           Aspect="AspectFill" 
-                           WidthRequest="130" 
-                           HeightRequest="180"
-                           HorizontalOptions="Center" />
+                                       Aspect="AspectFill" 
+                                       WidthRequest="130" 
+                                       HeightRequest="180"
+                                       HorizontalOptions="Fill"
+                                       VerticalOptions="Fill">
+                                    <Image.Shadow>
+                                        <Shadow Brush="Black" Offset="3,3" Opacity="0.5"/>
+                                    </Image.Shadow>
+                                </Image>
+
                                 <Label Text="{Binding Name}" 
-                           FontSize="16" 
-                           HorizontalOptions="Center" 
-                           TextColor="Black" 
-                           FontAttributes="Bold"
-                           LineBreakMode="WordWrap"
-                           MaxLines="2" />
+                                       FontSize="16" 
+                                       HorizontalOptions="Center" 
+                                       TextColor="#695060" 
+                                       FontAttributes="Bold"
+                                       LineBreakMode="WordWrap"
+                                       MaxLines="2" />
                                 <Label Text="{Binding FirstAirDate}" 
-                           FontSize="14" 
-                           HorizontalOptions="Center" 
-                           TextColor="Black" />
+                                       FontSize="14" 
+                                       HorizontalOptions="Center" 
+                                       TextColor="Black" />
                                 <Label Text="{Binding OriginCountryString}" 
-                           FontSize="14" 
-                           HorizontalOptions="Center" 
-                           TextColor="Black" />
+                                       FontSize="14" 
+                                       HorizontalOptions="Center" 
+                                       TextColor="Black" />
                                 <Label Text="{Binding GenreString}" 
-                           FontSize="14" 
-                           HorizontalOptions="Center" 
-                           TextColor="Black" />
-                                <Label Text="Explore"
-       FontSize="15"
-       TextColor="White"
-       VerticalOptions="Center">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnExploreTapped"/>
-                                    </Label.GestureRecognizers>
-                                </Label>
+                                       FontSize="14" 
+                                       HorizontalOptions="Center" 
+                                       TextColor="Black" />
+
+                                <!-- Knapp för att lägga till serien i Min Lista -->
+                                <Button Text="➕ Lägg till i min lista"
+                                        BackgroundColor="#8D7585"
+                                        TextColor="White"
+                                        CornerRadius="0"
+                                        Padding="5"
+                                        Command="{Binding AddToUserListCommand}"
+                                        CommandParameter="{Binding}"/>
                             </StackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </AbsoluteLayout>
-
     </ScrollView>
-    <!-- Slut på ScrollView -->
-
 </ContentPage>
-
-

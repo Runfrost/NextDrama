@@ -6,6 +6,7 @@ using NextDrama.Models;
 using NextDrama.Services;
 using Microsoft.Maui.Controls;
 using System.ComponentModel;
+using static NextDrama.Services.ApiService;
 
 namespace NextDrama.ViewModels
 {
@@ -25,16 +26,18 @@ namespace NextDrama.ViewModels
                 {
                     _searchQuery = value;
                     OnPropertyChanged(nameof(SearchQuery));
-                    _ = SearchTvShowsAsync(); // 🔹 Kör sökningen automatiskt när text ändras
+                    _ = SearchTvShowsAsync(); // 🔹 Live search aktiveras här
                 }
             }
         }
 
         public ICommand SearchCommand { get; }
+        public ICommand AddToUserListCommand { get; }
 
         public ShowsViewModel()
         {
             SearchCommand = new Command(async () => await SearchTvShowsAsync());
+            AddToUserListCommand = new Command<TvShow>(async (selectedShow) => await ShowCategoryPopup(selectedShow));
             _ = FetchTvShowsAsync();
         }
 
@@ -77,6 +80,18 @@ namespace NextDrama.ViewModels
                         Shows.Add(show);
                     }
                 }
+            }
+        }
+
+        private async Task ShowCategoryPopup(TvShow show)
+        {
+            string action = await Application.Current.MainPage.DisplayActionSheet(
+                "Välj kategori", "Avbryt", null, "Ser på", "Vill se", "Har sett");
+
+            if (action != "Avbryt" && action != null)
+            {
+                UserListService.AddToUserList(show, action);
+                await Application.Current.MainPage.DisplayAlert("✅ Tillagd!", $"{show.Name} har lagts till i \"{action}\"", "OK");
             }
         }
 
