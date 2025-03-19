@@ -33,6 +33,26 @@ namespace NextDrama.Services
                 return null;
             }
         }
+
+        public async Task<string> SearchTvShowsAsync(string query)
+        {
+            try
+            {
+                string apiUrl = $"https://api.themoviedb.org/3/search/tv?api_key={ApiKey}&language=en-US&query={Uri.EscapeDataString(query)}";
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                if (!response.IsSuccessStatusCode)
+                    throw new Exception($"API Error: {response.StatusCode}");
+
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Search API Error: {ex.Message}");
+                return null;
+            }
+        }
+
     }
 }
 

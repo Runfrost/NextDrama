@@ -123,12 +123,17 @@
 
                 <!-- Sökruta bredvid "Calendar" -->
                 <Entry Grid.Column="5"
-                       Placeholder="Search..."
-                       BackgroundColor="#8D7585"
-                       TextColor="Black"
-                       HeightRequest="30"
-                       VerticalOptions="Center"
-                       Margin="120,0,20,0"/>
+       Placeholder="Search..."
+       Text="{Binding SearchQuery}"
+       BackgroundColor="#8D7585"
+       TextColor="Black"
+       HeightRequest="30"
+       VerticalOptions="Center"
+       Margin="120,0,20,0"
+       Completed="OnSearchCompleted"/>
+                <!-- 🔹 Triggar metod i C#-filen -->
+
+
             </Grid>
 
             <!-- Bild under navigeringsmenyn -->
