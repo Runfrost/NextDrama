@@ -34,6 +34,11 @@ namespace NextDrama.Views
             ExploreDropdownLayout.IsVisible = false;
         }
 
+        private async void OnCalendarTapped(object sender, EventArgs e)
+        {
+            await DisplayAlert("Calendar", "Här kan du implementera en kalenderfunktion!", "OK");
+        }
+
         private void OnSearchCompleted(object sender, EventArgs e)
         {
             var viewModel = BindingContext as ShowsViewModel;
@@ -43,6 +48,12 @@ namespace NextDrama.Views
             }
         }
 
+        private async void AnimateButton(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            await button.ScaleTo(1.1, 100);
+            await button.ScaleTo(1.0, 100);
+        }
     }
 }
 
