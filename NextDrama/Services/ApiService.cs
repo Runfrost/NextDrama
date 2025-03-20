@@ -1,6 +1,9 @@
 ﻿using System;
+using NextDrama.Models;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Maui.Storage; // 🔹 För lokal lagring
 
 namespace NextDrama.Services
 {
@@ -38,8 +41,13 @@ namespace NextDrama.Services
         {
             try
             {
+<<<<<<< HEAD
                 string fullUrl = $"https://api.themoviedb.org/3/search/tv?api_key={ApiKey}&language=en-US&query={query}&page=1";
                 HttpResponseMessage response = await client.GetAsync(fullUrl);
+=======
+                string apiUrl = $"https://api.themoviedb.org/3/search/tv?api_key={ApiKey}&language=en-US&query={Uri.EscapeDataString(query)}";
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+>>>>>>> origin/main
 
                 if (!response.IsSuccessStatusCode)
                     throw new Exception($"API Error: {response.StatusCode}");
@@ -48,12 +56,23 @@ namespace NextDrama.Services
             }
             catch (Exception ex)
             {
+<<<<<<< HEAD
                 Console.WriteLine($"❌ API Search Error: {ex.Message}");
+=======
+                Console.WriteLine($"❌ Search API Error: {ex.Message}");
+>>>>>>> origin/main
                 return null;
             }
         }
 
+<<<<<<< HEAD
     }
+=======
+
+
+
+}
+>>>>>>> origin/main
 }
 
 

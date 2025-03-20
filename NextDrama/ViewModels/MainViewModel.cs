@@ -75,6 +75,7 @@ namespace NextDrama.ViewModels
                 }
             });
 
+<<<<<<< HEAD
             ImageTappedCommand = new Command<object>(async (param) =>
             {
                 if (param is Drama selectedDrama)
@@ -88,6 +89,19 @@ namespace NextDrama.ViewModels
                     {
                         await Application.Current.MainPage.DisplayAlert("Info", "Den här bilden gör ingenting!", "OK");
                     }
+=======
+            ImageTappedCommand = new Command<Drama>(async (selectedDrama) =>
+            {
+                if (selectedDrama == null) return;
+
+                if (RecommendedDramas.Contains(selectedDrama) && RecommendedDramas.IndexOf(selectedDrama) == 0)
+                {
+                    await Application.Current.MainPage.Navigation.PushAsync(new DramaDetail());
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Info", "Den här bilden gör ingenting!", "OK");
+>>>>>>> origin/main
                 }
                 else if (param is string strParam && strParam == "pr")
                 {

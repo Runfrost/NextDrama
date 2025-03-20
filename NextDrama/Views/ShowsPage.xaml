@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:NextDrama.ViewModels"
              x:Class="NextDrama.Views.ShowsPage">
 
+    <!-- Koppla ViewModel till denna sida -->
+    <ContentPage.BindingContext>
+        <local:ShowsViewModel/>
+    </ContentPage.BindingContext>
 
     <!-- Lägg till en ScrollView för att göra sidan skrollbar -->
     <ScrollView>
-
         <AbsoluteLayout>
 
             <!-- Dropdown Explore (ÖVER bilden) -->
@@ -75,7 +79,7 @@
                     </Label.GestureRecognizers>
                 </Label>
 
-                <!-- Explore (Dropdown + Pil bredvid) -->
+                <!-- Explore -->
                 <StackLayout Grid.Column="2" Orientation="Horizontal" VerticalOptions="Center" Margin="40,0,40,0">
                     <Label Text="Explore"
                            FontSize="15"
@@ -99,7 +103,7 @@
                            TextColor="White"
                            VerticalOptions="Center">
                         <Label.GestureRecognizers>
-                           
+                            <TapGestureRecognizer Tapped="OnCommunityTapped"/>
                         </Label.GestureRecognizers>
                     </Label>
                     <Label Text="▼"
@@ -123,6 +127,7 @@
 
                 <!-- Sökruta bredvid "Calendar" -->
                 <Entry Grid.Column="5"
+<<<<<<< HEAD
        Placeholder="Search..."
        Text="{Binding SearchQuery}"
                     BackgroundColor="#8D7585"
@@ -131,59 +136,80 @@
        VerticalOptions="Center"
        Margin="120,0,20,0"
        Completed="OnSearchCompleted"/>
+=======
+                       Placeholder="Search..."
+                       Text="{Binding SearchQuery}"
+                       BackgroundColor="#8D7585"
+                       TextColor="Black"
+                       HeightRequest="30"
+                       VerticalOptions="Center"
+                       Margin="120,0,20,0"
+                       Completed="OnSearchCompleted"/>
+>>>>>>> origin/main
             </Grid>
 
             <!-- Bild under navigeringsmenyn -->
             <Image Source="sk.png"
                    Aspect="AspectFill"
                    AbsoluteLayout.LayoutBounds="0.5, 0.11,0.9, 200"
-                   AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-                   Margin="0,0,0,0"/>
+                   AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"/>
 
-
+            <!-- CollectionView för att visa serier -->
             <CollectionView x:Name="ShowsCollectionView"
-                AbsoluteLayout.LayoutBounds="0.5, 0.8, 0.9, 400"
-                AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
-                ItemsSource="{Binding Shows}">
+                            AbsoluteLayout.LayoutBounds="0.5, 0.8, 0.9, 400"
+                            AbsoluteLayout.LayoutFlags="PositionProportional, WidthProportional"
+                            ItemsSource="{Binding Shows}">
 
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Span="4" Orientation="Vertical" />
                 </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame Padding="10"
-                   BorderColor="White"
-                   BackgroundColor="#F3E9F0"
-                   CornerRadius="10"
-                   HasShadow="True"
-                   Margin="10">
+                               BorderColor="White"
+                               BackgroundColor="#F3E9F0"
+                               CornerRadius="10"
+                               HasShadow="False"
+                               Margin="10">
                             <StackLayout Padding="5" Spacing="5">
+
+                                <!-- Bild med enbart skugga -->
                                 <Image Source="{Binding FullPosterUrl}" 
+<<<<<<< HEAD
        Aspect="AspectFill" 
        WidthRequest="130" 
        HeightRequest="180"
        HorizontalOptions="Center">
+=======
+                                       Aspect="AspectFill" 
+                                       WidthRequest="130" 
+                                       HeightRequest="180"
+                                       HorizontalOptions="Fill"
+                                       VerticalOptions="Fill">
+>>>>>>> origin/main
                                     <Image.Shadow>
                                         <Shadow Brush="Black" Offset="3,3" Opacity="0.5"/>
                                     </Image.Shadow>
                                 </Image>
 
                                 <Label Text="{Binding Name}" 
-                           FontSize="16" 
-                           HorizontalOptions="Center" 
-                           TextColor="Black" 
-                           FontAttributes="Bold"
-                           LineBreakMode="WordWrap"
-                           MaxLines="2" />
+                                       FontSize="16" 
+                                       HorizontalOptions="Center" 
+                                       TextColor="#695060" 
+                                       FontAttributes="Bold"
+                                       LineBreakMode="WordWrap"
+                                       MaxLines="2" />
                                 <Label Text="{Binding FirstAirDate}" 
-                           FontSize="14" 
-                           HorizontalOptions="Center" 
-                           TextColor="Black" />
+                                       FontSize="14" 
+                                       HorizontalOptions="Center" 
+                                       TextColor="Black" />
                                 <Label Text="{Binding OriginCountryString}" 
-                           FontSize="14" 
-                           HorizontalOptions="Center" 
-                           TextColor="Black" />
+                                       FontSize="14" 
+                                       HorizontalOptions="Center" 
+                                       TextColor="Black" />
                                 <Label Text="{Binding GenreString}" 
+<<<<<<< HEAD
                            FontSize="14" 
                            HorizontalOptions="Center" 
                            TextColor="Black" />
@@ -195,37 +221,27 @@
         Command="{Binding Path=BindingContext.AddToUserListCommand, Source={x:Reference ShowsCollectionView}}"
         CommandParameter="{Binding}"/>
 
+=======
+                                       FontSize="14" 
+                                       HorizontalOptions="Center" 
+                                       TextColor="Black" />
+
+                                <!-- Knapp med animation -->
+                                <Button Text="➕ Lägg till i min lista"
+                                        BackgroundColor="#8D7585"
+                                        TextColor="White"
+                                        CornerRadius="20"
+                                        Padding="5"
+                                        Command="{Binding AddToUserListCommand}"
+                                        CommandParameter="{Binding}"
+                                        Clicked="AnimateButton"/>
+>>>>>>> origin/main
                             </StackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </AbsoluteLayout>
-
     </ScrollView>
-    <!-- Slut på ScrollView -->
-
 </ContentPage>
-
-

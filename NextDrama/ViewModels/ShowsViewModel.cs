@@ -6,12 +6,20 @@ using NextDrama.Models;
 using NextDrama.Services;
 using Microsoft.Maui.Controls;
 using System.ComponentModel;
+<<<<<<< HEAD
+=======
+using static NextDrama.Services.ApiService;
+>>>>>>> origin/main
 
 namespace NextDrama.ViewModels
 {
     public class ShowsViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
         public ObservableCollection<TvShow> Shows { get; set; } = new();
 
         private string _searchQuery;
@@ -24,7 +32,11 @@ namespace NextDrama.ViewModels
                 {
                     _searchQuery = value;
                     OnPropertyChanged(nameof(SearchQuery));
+<<<<<<< HEAD
                     _ = SearchTvShowsAsync(); // 🔹 Fix: Återställd metodanrop
+=======
+                    _ = SearchTvShowsAsync(); // 🔹 Live search aktiveras här
+>>>>>>> origin/main
                 }
             }
         }
@@ -58,11 +70,15 @@ namespace NextDrama.ViewModels
             }
         }
 
+<<<<<<< HEAD
         // ✅ FIX: Återställd metod för sökfunktionen!
+=======
+>>>>>>> origin/main
         public async Task SearchTvShowsAsync()
         {
             if (string.IsNullOrWhiteSpace(SearchQuery))
             {
+<<<<<<< HEAD
                 await FetchTvShowsAsync(); // 🔹 Om sökfältet är tomt, ladda om alla serier
                 return;
             }
@@ -70,6 +86,13 @@ namespace NextDrama.ViewModels
             string apiUrl = $"&language=en-US&query={SearchQuery}&page=1&include_adult=false";
             string jsonResponse = await ApiService.Instance.GetRawApiResponseAsync(apiUrl);
 
+=======
+                await FetchTvShowsAsync(); // 🔹 Om fältet är tomt, visa alla koreanska serier igen
+                return;
+            }
+
+            string jsonResponse = await ApiService.Instance.SearchTvShowsAsync(SearchQuery);
+>>>>>>> origin/main
             if (!string.IsNullOrEmpty(jsonResponse))
             {
                 var searchResults = JsonSerializer.Deserialize<TvShowResponse>(jsonResponse);
@@ -92,10 +115,13 @@ namespace NextDrama.ViewModels
             if (action != "Avbryt" && action != null)
             {
                 UserListService.AddToUserList(show, action);
+<<<<<<< HEAD
 
                 // 🔹 Uppdatera `MyPersonalPage` direkt
                 MessagingCenter.Send(this, "UpdatePersonalPage");
 
+=======
+>>>>>>> origin/main
                 await Application.Current.MainPage.DisplayAlert("✅ Tillagd!", $"{show.Name} har lagts till i \"{action}\"", "OK");
             }
         }
@@ -108,3 +134,8 @@ namespace NextDrama.ViewModels
 }
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/main

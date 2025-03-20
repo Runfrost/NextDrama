@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json;
 using Microsoft.Maui.Storage;
+<<<<<<< HEAD
 using NextDrama.Models;
+=======
+using NextDrama.Models; // 🔹 Se till att detta finns
+>>>>>>> origin/main
 
 namespace NextDrama.Services
 {
@@ -34,11 +38,14 @@ namespace NextDrama.Services
             string json = JsonSerializer.Serialize(userList);
             Preferences.Set(UserListKey, json);
         }
+<<<<<<< HEAD
 
         public static void ClearUserList() // 🔹 Rensar sparade serier (för testning)
         {
             Preferences.Remove(UserListKey);
         }
+=======
+>>>>>>> origin/main
     }
 }
 
