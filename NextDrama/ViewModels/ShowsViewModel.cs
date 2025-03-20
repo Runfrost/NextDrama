@@ -24,7 +24,7 @@ namespace NextDrama.ViewModels
                 {
                     _searchQuery = value;
                     OnPropertyChanged(nameof(SearchQuery));
-                    _ = SearchTvShowsAsync(); // 🔹 Startar sökning när användaren skriver
+                    _ = SearchTvShowsAsync(); // 🔹 Fix: Återställd metodanrop
                 }
             }
         }
@@ -58,15 +58,18 @@ namespace NextDrama.ViewModels
             }
         }
 
+        // ✅ FIX: Återställd metod för sökfunktionen!
         public async Task SearchTvShowsAsync()
         {
             if (string.IsNullOrWhiteSpace(SearchQuery))
             {
-                await FetchTvShowsAsync();
+                await FetchTvShowsAsync(); // 🔹 Om sökfältet är tomt, ladda om alla serier
                 return;
             }
 
-            string jsonResponse = await ApiService.Instance.SearchTvShowsAsync(SearchQuery);
+            string apiUrl = $"&language=en-US&query={SearchQuery}&page=1&include_adult=false";
+            string jsonResponse = await ApiService.Instance.GetRawApiResponseAsync(apiUrl);
+
             if (!string.IsNullOrEmpty(jsonResponse))
             {
                 var searchResults = JsonSerializer.Deserialize<TvShowResponse>(jsonResponse);
@@ -89,10 +92,11 @@ namespace NextDrama.ViewModels
             if (action != "Avbryt" && action != null)
             {
                 UserListService.AddToUserList(show, action);
-                await Application.Current.MainPage.DisplayAlert("✅ Tillagd!", $"{show.Name} har lagts till i \"{action}\"", "OK");
 
-                // 🔹 Uppdatera MyPersonalPage direkt så att serien visas där
+                // 🔹 Uppdatera `MyPersonalPage` direkt
                 MessagingCenter.Send(this, "UpdatePersonalPage");
+
+                await Application.Current.MainPage.DisplayAlert("✅ Tillagd!", $"{show.Name} har lagts till i \"{action}\"", "OK");
             }
         }
 
@@ -102,6 +106,5 @@ namespace NextDrama.ViewModels
         }
     }
 }
-
 
 

@@ -294,11 +294,14 @@
                                  CommandParameter="fe"
                                  Margin="10,0,10,0"/>
 
-                    <ImageButton Source="pr.png" WidthRequest="55" HeightRequest="60"
-                                 BackgroundColor="Transparent"
-                                 Command="{Binding ImageTappedCommand}"
-                                 CommandParameter="pr"
-                                 Margin="10,0,10,0"/>
+                    <ImageButton Source="pr.png"
+             WidthRequest="55"
+             HeightRequest="60"
+             BackgroundColor="Transparent"
+             Command="{Binding ImageTappedCommand}"
+             CommandParameter="pr"
+             Margin="10,0,10,0"/>
+
                 </HorizontalStackLayout>
 
             </Grid>

@@ -75,19 +75,27 @@ namespace NextDrama.ViewModels
                 }
             });
 
-            ImageTappedCommand = new Command<Drama>(async (selectedDrama) =>
+            ImageTappedCommand = new Command<object>(async (param) =>
             {
-                if (selectedDrama == null) return;
-
-                if (RecommendedDramas.Contains(selectedDrama) && RecommendedDramas.IndexOf(selectedDrama) == 0)
+                if (param is Drama selectedDrama)
                 {
-                    await Application.Current.MainPage.Navigation.PushAsync(new DramaDetail());
+                    // Om det är en Drama-bild som klickas
+                    if (RecommendedDramas.Contains(selectedDrama) && RecommendedDramas.IndexOf(selectedDrama) == 0)
+                    {
+                        await Application.Current.MainPage.Navigation.PushAsync(new DramaDetail());
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Info", "Den här bilden gör ingenting!", "OK");
+                    }
                 }
-                else
+                else if (param is string strParam && strParam == "pr")
                 {
-                    await Application.Current.MainPage.DisplayAlert("Info", "Den här bilden gör ingenting!", "OK");
+                    // Om det är knappen med `pr.png` som klickas
+                    await Application.Current.MainPage.Navigation.PushAsync(new MyPersonalPage());
                 }
             });
+
         }
     }
 }

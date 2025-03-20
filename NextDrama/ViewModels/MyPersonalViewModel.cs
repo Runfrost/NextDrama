@@ -1,9 +1,8 @@
-﻿using NextDrama.Services;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using NextDrama.Models;
+using NextDrama.Services;
 using Microsoft.Maui.Controls;
-using System.Linq; // 🔹 Behövs för LINQ-metoder
 
 namespace NextDrama.ViewModels
 {
@@ -19,7 +18,7 @@ namespace NextDrama.ViewModels
         {
             LoadUserLists();
 
-            // 🔹 Uppdatera sidan automatiskt när något ändras
+            // 🔹 Uppdaterar sidan automatiskt när något läggs till i en lista
             MessagingCenter.Subscribe<ShowsViewModel>(this, "UpdatePersonalPage", (sender) =>
             {
                 LoadUserLists();
@@ -55,14 +54,13 @@ namespace NextDrama.ViewModels
             OnPropertyChanged(nameof(Watched));
         }
 
-
-
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
+
 
 
 

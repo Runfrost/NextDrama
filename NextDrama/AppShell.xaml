@@ -18,6 +18,11 @@
         Title="Shows"
         ContentTemplate="{DataTemplate views:ShowsPage}"
         Route="ShowsPage" />
+
+    <ShellContent Title="Min Sida"
+              ContentTemplate="{DataTemplate views:MyPersonalPage}"
+              Route="MyPersonalPage"/>
+
 </Shell>
 
 

@@ -9,11 +9,9 @@ namespace NextDrama.Services
     {
         private const string UserListKey = "UserSeriesList";
 
-        // 🔹 Lägger till en serie i listan och sparar
         public static void AddToUserList(TvShow show, string category)
         {
             var userList = GetUserList();
-
             if (!userList.ContainsKey(show.Id))
             {
                 userList[show.Id] = (show, category);
@@ -21,55 +19,25 @@ namespace NextDrama.Services
             }
         }
 
-        // 🔹 Hämtar listan från Preferences och hanterar JSON-fel
         public static Dictionary<int, (TvShow Show, string Category)> GetUserList()
         {
-            try
+            if (Preferences.ContainsKey(UserListKey))
             {
-                if (Preferences.ContainsKey(UserListKey))
-                {
-                    string json = Preferences.Get(UserListKey, "");
-
-                    // 🔥 Kontrollera om JSON är tom
-                    if (string.IsNullOrWhiteSpace(json))
-                    {
-                        return new Dictionary<int, (TvShow, string)>();
-                    }
-
-                    // 🔹 Försöker avkoda JSON till rätt format
-                    return JsonSerializer.Deserialize<Dictionary<int, (TvShow, string)>>(json) ?? new();
-                }
+                string json = Preferences.Get(UserListKey, "");
+                return JsonSerializer.Deserialize<Dictionary<int, (TvShow, string)>>(json) ?? new();
             }
-            catch (JsonException ex)
-            {
-                Console.WriteLine($"⚠️ JSON Error: {ex.Message}");
-
-                // 🔥 Om JSON är trasig: Radera och returnera en tom lista
-                Preferences.Remove(UserListKey);
-            }
-
-            return new Dictionary<int, (TvShow, string)>();
+            return new();
         }
 
-        // 🔹 Sparar listan tillbaka i Preferences
         private static void SaveUserList(Dictionary<int, (TvShow Show, string Category)> userList)
         {
-            try
-            {
-                string json = JsonSerializer.Serialize(userList);
-                Preferences.Set(UserListKey, json);
-            }
-            catch (JsonException ex)
-            {
-                Console.WriteLine($"⚠️ JSON Save Error: {ex.Message}");
-            }
+            string json = JsonSerializer.Serialize(userList);
+            Preferences.Set(UserListKey, json);
         }
 
-        // 🔹 Rensar listan manuellt (exempel för en knapp)
-        public static void ClearUserList()
+        public static void ClearUserList() // 🔹 Rensar sparade serier (för testning)
         {
             Preferences.Remove(UserListKey);
-            Console.WriteLine("🗑️ Raderade användarens listor!");
         }
     }
 }
