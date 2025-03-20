@@ -17,7 +17,6 @@ namespace NextDrama.Views
 
         private void OnExploreTapped(object sender, EventArgs e)
         {
-            // Här kan du lägga till logik för att visa dropdown eller navigera
             Console.WriteLine("?? OnExploreTapped triggered in DramaDetail");
             ExploreDropdownLayout.IsVisible = !ExploreDropdownLayout.IsVisible;
             CommunityDropdownLayout.IsVisible = false;
@@ -41,4 +40,5 @@ namespace NextDrama.Views
         }
     }
 }
+
 

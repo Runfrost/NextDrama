@@ -17,8 +17,6 @@ namespace NextDrama
             StartImageRotation();
         }
 
-
-
         private void StartImageRotation()
         {
             imageTimer = new System.Timers.Timer(5000);

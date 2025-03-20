@@ -117,18 +117,20 @@
                        VerticalOptions="Center"
                        Margin="40,0,20,0">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnCalendarTapped"/>
+                        
                     </Label.GestureRecognizers>
                 </Label>
 
                 <!-- Sökruta bredvid "Calendar" -->
                 <Entry Grid.Column="5"
-                       Placeholder="Search..."
-                       BackgroundColor="#8D7585"
-                       TextColor="Black"
-                       HeightRequest="30"
-                       VerticalOptions="Center"
-                       Margin="120,0,20,0"/>
+       Placeholder="Search..."
+       Text="{Binding SearchQuery}"
+                    BackgroundColor="#8D7585"
+       TextColor="Black"
+       HeightRequest="30"
+       VerticalOptions="Center"
+       Margin="120,0,20,0"
+       Completed="OnSearchCompleted"/>
             </Grid>
 
             <!-- Bild under navigeringsmenyn -->
@@ -157,10 +159,15 @@
                    Margin="10">
                             <StackLayout Padding="5" Spacing="5">
                                 <Image Source="{Binding FullPosterUrl}" 
-                           Aspect="AspectFill" 
-                           WidthRequest="130" 
-                           HeightRequest="180"
-                           HorizontalOptions="Center" />
+       Aspect="AspectFill" 
+       WidthRequest="130" 
+       HeightRequest="180"
+       HorizontalOptions="Center">
+                                    <Image.Shadow>
+                                        <Shadow Brush="Black" Offset="3,3" Opacity="0.5"/>
+                                    </Image.Shadow>
+                                </Image>
+
                                 <Label Text="{Binding Name}" 
                            FontSize="16" 
                            HorizontalOptions="Center" 
@@ -180,14 +187,14 @@
                            FontSize="14" 
                            HorizontalOptions="Center" 
                            TextColor="Black" />
-                                <Label Text="Explore"
-       FontSize="15"
-       TextColor="White"
-       VerticalOptions="Center">
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnExploreTapped"/>
-                                    </Label.GestureRecognizers>
-                                </Label>
+                                <Button Text="+ Lägg till i min lista"
+        BackgroundColor="#8D7585"
+        TextColor="White"
+        CornerRadius="20"
+        Padding="5"
+        Command="{Binding Path=BindingContext.AddToUserListCommand, Source={x:Reference ShowsCollectionView}}"
+        CommandParameter="{Binding}"/>
+
                             </StackLayout>
                         </Frame>
                     </DataTemplate>

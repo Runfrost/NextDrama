@@ -32,7 +32,7 @@
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    FontSize="17"
-                   TextColor="DimGrey" 
+                   TextColor="Gray" 
                    Margin="0,20,0,50"/>
 
             <Image x:Name="HeaderImage"

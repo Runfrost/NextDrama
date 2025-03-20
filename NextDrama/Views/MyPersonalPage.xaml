@@ -1,0 +1,83 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:NextDrama.ViewModels"
+             x:Class="NextDrama.Views.MyPersonalPage">
+
+    <ContentPage.BindingContext>
+        <local:MyPersonalViewModel/>
+    </ContentPage.BindingContext>
+
+    <!-- 🔹 ScrollView är den enda root-layouten -->
+    <ScrollView>
+        <VerticalStackLayout>
+
+            <!-- 🔹 HEADER - NextDrama + Tillbaka-knapp -->
+            <Grid BackgroundColor="#695060" HeightRequest="60" Padding="10" Margin="0,50,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"
+                        Text="Home"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        FontSize="14"
+                        Padding="10"
+                        HorizontalOptions="Start"
+                        Margin="280,0,0,0"
+                        Clicked="OnBackToHomeTapped"/>
+
+                <AbsoluteLayout>
+                    <Label Text="NextDrama"
+                           FontSize="30"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           FontFamily="OpenSansSemibold"
+                           AbsoluteLayout.LayoutBounds="0.1, 0.5, -1, -1"
+                           AbsoluteLayout.LayoutFlags="PositionProportional">
+                        <Label.Shadow>
+                            <Shadow Brush="Black" Offset="2,2" Opacity="0.6"/>
+                        </Label.Shadow>
+                    </Label>
+                </AbsoluteLayout>
+            </Grid>
+
+            <Grid>
+                <Image Source="header4.png"
+                       HeightRequest="330"
+                       Aspect="AspectFill"
+                       HorizontalOptions="Fill"
+                       VerticalOptions="Start"/>
+            </Grid>
+
+            <!-- 🔹 Sektioner: Ser på just nu, Vill se, Har sett -->
+            <Label Text="📺 Ser på just nu"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="DimGrey"
+                   Margin="40,20,0,10"/>
+
+            <CollectionView ItemsSource="{Binding WatchingNow}" HeightRequest="250">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="20"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="0" CornerRadius="10" BackgroundColor="Transparent"
+                               WidthRequest="130" HeightRequest="200"
+                               HasShadow="True" BorderColor="Transparent">
+                            <Image Source="{Binding FullPosterUrl}" WidthRequest="130" HeightRequest="200" Aspect="AspectFit"/>
+                            <Label Text="{Binding Name}" FontSize="14" TextColor="Black" HorizontalOptions="Center"/>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
+
+
