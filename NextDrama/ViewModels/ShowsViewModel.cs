@@ -26,7 +26,7 @@ namespace NextDrama.ViewModels
                 {
                     _searchQuery = value;
                     OnPropertyChanged(nameof(SearchQuery));
-                    _ = SearchTvShowsAsync(); // 🔹 Live search aktiveras här
+                    _ = SearchTvShowsAsync(); // Live sökningen aktiveras här
                 }
             }
         }
@@ -44,7 +44,7 @@ namespace NextDrama.ViewModels
         public async Task FetchTvShowsAsync()
         {
             string apiUrl = "&language=en-US&sort_by=popularity.desc&page=1&with_original_language=ko";
-            string jsonResponse = await ApiService.Instance.GetRawApiResponseAsync(apiUrl);
+            string jsonResponse = await ApiService.Instance.GetRawApiResponseAsync(apiUrl); //Här anropas ApiService.Instance
 
             if (!string.IsNullOrEmpty(jsonResponse))
             {
@@ -64,11 +64,11 @@ namespace NextDrama.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SearchQuery))
             {
-                await FetchTvShowsAsync(); // 🔹 Om fältet är tomt, visa alla koreanska serier igen
+                await FetchTvShowsAsync(); // Om fältet är tomt, visa alla koreanska serier igen
                 return;
             }
 
-            string jsonResponse = await ApiService.Instance.SearchTvShowsAsync(SearchQuery);
+            string jsonResponse = await ApiService.Instance.SearchTvShowsAsync(SearchQuery);//Skickar en förfrågan till TMDb:s API
             if (!string.IsNullOrEmpty(jsonResponse))
             {
                 var searchResults = JsonSerializer.Deserialize<TvShowResponse>(jsonResponse);
@@ -83,6 +83,8 @@ namespace NextDrama.ViewModels
             }
         }
 
+
+
         private async Task ShowCategoryPopup(TvShow show)
         {
             string action = await Application.Current.MainPage.DisplayActionSheet(
@@ -94,6 +96,8 @@ namespace NextDrama.ViewModels
                 await Application.Current.MainPage.DisplayAlert("✅ Tillagd!", $"{show.Name} har lagts till i \"{action}\"", "OK");
             }
         }
+
+
 
         protected void OnPropertyChanged(string propertyName)
         {

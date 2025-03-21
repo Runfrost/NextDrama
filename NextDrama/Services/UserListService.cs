@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json;
 using Microsoft.Maui.Storage;
-using NextDrama.Models; // 🔹 Se till att detta finns
+using NextDrama.Models; 
 
 namespace NextDrama.Services
 {
@@ -9,15 +9,22 @@ namespace NextDrama.Services
     {
         private const string UserListKey = "UserSeriesList";
 
+       
+
+
         public static void AddToUserList(TvShow show, string category)
         {
-            var userList = GetUserList();
+            var userList = GetUserList(); //Hämtar aktuella listan
             if (!userList.ContainsKey(show.Id))
             {
-                userList[show.Id] = (show, category);
+                userList[show.Id] = (show, category); //Lägger till serien och kategorin
                 SaveUserList(userList);
             }
         }
+
+
+
+
 
         public static Dictionary<int, (TvShow Show, string Category)> GetUserList()
         {
@@ -29,11 +36,17 @@ namespace NextDrama.Services
             return new();
         }
 
+
+
+
         private static void SaveUserList(Dictionary<int, (TvShow Show, string Category)> userList)
         {
             string json = JsonSerializer.Serialize(userList);
-            Preferences.Set(UserListKey, json);
+            Preferences.Set(UserListKey, json); //Sparar den i enhetens lagring
         }
+
+
+
     }
 }
 
